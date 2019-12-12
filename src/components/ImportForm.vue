@@ -1,11 +1,19 @@
 <template>
   <div class="wrapper">
-    <div class="import">
+
+    <div class="import__label">
       <h3>Import YML</h3>
+    </div>
+
+    <div class="import">
       <textarea name="name" rows="8" v-model="importStr"></textarea>
     </div>
+
+    <div class="editor__label">
+      <h3>Edit YML</h3>
+    </div>
+
     <div class="editor">
-      <h1>Edit YML</h1>
       <p>
         Paste or enter your <a href="http://www.yamllint.com/" target="_blank">clean YAML</a> to the right 👉.<br>
         Edit it below 👇. Export the resulting YAML at the bottom right.
@@ -14,9 +22,13 @@
         {{ editForm() }}
       </div>
     </div>
-    <div class="export">
+
+    <div class="expor__label">
       <h3>Export YML</h3>
-      <div class="export__content">{{ exportStr }}</div>
+    </div>
+
+    <div class="export">
+      <pre class="export__content">{{exportStr}}</pre>
     </div>
   </div>
 </template>
@@ -141,18 +153,19 @@
           links:
             - "[Memory Recognition and Recall in User Interfaces](https://www.nngroup.com/articles/recognition-and-recall/)"
   `}
-
 </script>
 
 <style lang="scss">
   .wrapper {
-    height: 100vh;
+    max-height: 100vh;
 
     display: grid;
-    grid-template-columns: 60% 40%;
-    grid-template-rows: 30% 80%;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto 4fr auto 8fr;
     grid-template-areas:
+      'editor__label import__label'
       'editor import'
+      'editor export__label'
       'editor export';
 
     & > * { overflow: scroll; }
@@ -162,21 +175,34 @@
     }
   }
 
-  .editor {
-    grid-area: editor;
-  }
+  .editor__label { grid-area: editor__label; }
+  .editor { grid-area: editor; }
+  .import__label { grid-area: import__label; }
   .import {
     grid-area: import;
 
     textarea {
+      height: 100%;
       width: 100%;
       background-color: #eee;
       border: none;
       resize: none;
       outline: none;
+
+      box-shadow: inset 0 0 5px #888;
     }
   }
+  .export__label { grid-area: export__label; }
   .export {
     grid-area: export;
+
+    pre {
+      margin: 0;
+      font-family: inherit;
+      background-color: #ddd;
+
+      overflow: auto;
+      padding: 5px;
+    }
   }
 </style>
