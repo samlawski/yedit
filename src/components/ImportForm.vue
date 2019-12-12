@@ -3,7 +3,7 @@
     <h1>Import YML</h1>
     <p>Copy and paste your YAML code below. Make sure it's all correct YAML code to begin with.</p>
     <p>If you have any issues, check <a href="http://www.yamllint.com/" target="_blank">Yamllint</a> to check your YAML for any errors.</p>
-    <textarea name="name" rows="8" cols="80" v-model="importedObj"></textarea>
+    <textarea name="name" rows="8" cols="80" v-model="importedStr"></textarea>
     <div class="">
       {{ convertedObj }}
     </div>
@@ -13,17 +13,49 @@
 <script>
 import YAML from 'yaml'
 
+const getType = obj => ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
+const isObj = obj => getType(obj) == 'object'
+const isArr = obj => getType(obj) == 'array'
+const isNumOrStr = obj => ['string', 'number'].includes(getType(obj))
+
+
+
+
 export default {
   name: "ImportForm",
   data: () => {
     return {
-      importedObj: demoContent()
+      importedStr: demoContent()
     }
   },
   computed: {
     convertedObj: function (){
-      console.log(YAML.parse(this.importedObj))
-      return YAML.parse(this.importedObj)
+      try{
+        let importedObj = YAML.parse(this.importedStr)
+
+        // console.log(getType(importedObj))
+
+        const doSomething = obj => {
+          if(isNumOrStr(obj)){
+            return 'input'
+          }else if(isArr(obj)){
+            return 'arr of inputs'
+          }else if(isObj(obj)){
+            return 'inputs with labels'
+          }else{
+            return `YAML object ${obj} could not be identified.`
+          }
+        }
+
+        // console.log(YAML.parse(this.importedObj))
+        // console.log(getType(this.importedObj))
+
+        // console.log(doSomething(importedObj))
+
+        return doSomething(importedObj)
+      }catch(error){
+        return "Whoops. You don't seem to have entered valid YAML"
+      }
     }
   }
 }
