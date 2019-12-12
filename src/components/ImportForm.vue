@@ -28,7 +28,7 @@
     </div>
 
     <div class="export">
-      <pre class="export__content">{{exportStr}}</pre>
+      <pre class="export__content" v-on:click="copyExport">{{exportStr}}</pre>
     </div>
   </div>
 </template>
@@ -85,6 +85,11 @@
         // console.log(doSomething(importedObj))
 
         return doSomething(this.editableObj)
+      },
+      copyExport: function(){
+        navigator.clipboard.writeText(this.exportStr).then(() => {
+          alert("Export YML copied to clipboard. You can now just paste it anywhere.")
+        })
       }
     }
   }
@@ -203,6 +208,13 @@
 
       overflow: auto;
       padding: 5px;
+
+      cursor: pointer;
+      transition: .4s all;
+
+      &:hover {
+        background-color: lightgreen;
+      }
     }
   }
 </style>
