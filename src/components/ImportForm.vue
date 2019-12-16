@@ -6,7 +6,7 @@
     </div>
 
     <div class="import">
-      <textarea name="name" rows="8" v-model="importStr"></textarea>
+      <textarea name="name" rows="8" @input="parseImport" v-model="importStr"></textarea>
     </div>
 
     <div class="editor__label">
@@ -18,8 +18,12 @@
         Paste or enter your <a href="http://www.yamllint.com/" target="_blank">clean YAML</a> to the right 👉.<br>
         Edit it below 👇. Export the resulting YAML at the bottom right.
       </p>
-      <div class="">
-        {{ editForm() }}
+      <div class="editor__form">
+
+        <div class="editor__field" v-for="(val, key, i) in editableObj" v-bind:key="`editable-wrapper-${i || key}`">
+          <FormField v-bind:uid="i || key" v-bind:name="key || ''" v-model="editableObj[key]" />
+        </div>
+        
       </div>
     </div>
 
@@ -35,56 +39,32 @@
 
 <script>
   import YAML from 'yaml'
-
-  const getType = obj => ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
-  const isObj = obj => getType(obj) == 'object'
-  const isArr = obj => getType(obj) == 'array'
-  const isNumOrStr = obj => ['string', 'number'].includes(getType(obj))
-
-
-
+  // import {getType, isNumOrStr} from '@/services/Utility.js'
+  import FormField from '@/components/FormField.vue'
 
   export default {
     name: "ImportForm",
+    components: {FormField},
+    props: {},
     data: () => {
       return {
-        importStr: demoContent()
+        importStr: demoContent(), // DEMO CONTENT - TODO: Remove!
+        editableObj: YAML.parse(demoContent()), // DEMO CONTENT - TODO: Remove!
       }
     },
     computed: {
-      editableObj: function (){
-        try{
-          return YAML.parse(this.importStr)
-        }catch(error){
-          return "Whoops. You don't seem to have entered valid YAML"
-        }
-      },
       exportStr: function(){
         return YAML.stringify(this.editableObj)
       }
     },
     methods: {
-      editForm: function(){
-        // console.log(getType(importedObj))
-
-        const doSomething = obj => {
-          if(isNumOrStr(obj)){
-            return 'input'
-          }else if(isArr(obj)){
-            return 'arr of inputs'
-          }else if(isObj(obj)){
-            return 'inputs with labels'
-          }else{
-            return `YAML object ${obj} could not be identified.`
-          }
+      parseImport: function(){
+        try{
+          // TODO Make sure this is always an object or array?
+          this.editableObj = YAML.parse(this.importStr)
+        }catch(error){
+          this.editableObj = "Whoops. You don't seem to have entered valid YAML"
         }
-
-        // console.log(YAML.parse(this.importedObj))
-        // console.log(getType(this.importedObj))
-
-        // console.log(doSomething(importedObj))
-
-        return doSomething(this.editableObj)
       },
       copyExport: function(){
         navigator.clipboard.writeText(this.exportStr).then(() => {
