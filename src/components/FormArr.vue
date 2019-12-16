@@ -1,0 +1,44 @@
+<template lang="html">
+  <div>
+    <div class="editor__arr" v-for="(val, i) in arr" v-bind:key="`editable-wrapper-arr-${i}`">
+
+      <div v-if="isNumOrStr(val)">
+        <FormField v-model="arr[i]" />
+      </div>
+      <div v-else-if="isArr(val)">
+        <FormArr v-bind:arr="val" />
+      </div>
+      <div v-else-if="isObj(val)">
+        <FormObj v-bind:obj="val" />
+      </div>
+      <div v-else>
+        <p>Whoops. Somehow this field couldn't be displayed 🤷‍</p>
+      </div>
+
+    </div>
+  </div>
+</template>
+
+<script>
+import {isNumOrStr, isObj, isArr} from '@/services/Utility.js'
+import FormField from '@/components/FormField.vue'
+import FormObj from '@/components/FormObj.vue'
+
+export default {
+  name: 'FormArr',
+  components: {FormField, FormObj},
+  props: ['arr'],
+  methods: {
+    isNumOrStr: val => isNumOrStr(val),
+    isArr: val => isArr(val),
+    isObj: val => isObj(val)
+  }
+}
+</script>
+
+<style lang="scss">
+.editor__arr {
+  border: 1px solid lightblue;
+  padding: 5px;
+}
+</style>

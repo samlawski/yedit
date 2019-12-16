@@ -20,10 +20,16 @@
       </p>
       <div class="editor__form">
 
-        <div class="editor__field" v-for="(val, key, i) in editableObj" v-bind:key="`editable-wrapper-${i || key}`">
-          <FormField v-bind:uid="i || key" v-bind:name="key || ''" v-model="editableObj[key]" />
+        <div v-if="isNumOrStr(editableObj)">
+          <FormField v-model="editableObj" />
         </div>
-        
+        <div v-else-if="isArr(editableObj)">
+          <FormArr v-bind:arr="editableObj" />
+        </div>
+        <div v-else-if="isObj(editableObj)">
+          <FormObj v-bind:obj="editableObj" />
+        </div>
+
       </div>
     </div>
 
@@ -39,12 +45,14 @@
 
 <script>
   import YAML from 'yaml'
-  // import {getType, isNumOrStr} from '@/services/Utility.js'
+  import {isNumOrStr, isObj, isArr} from '@/services/Utility.js'
   import FormField from '@/components/FormField.vue'
+  import FormObj from '@/components/FormObj.vue'
+  import FormArr from '@/components/FormArr.vue'
 
   export default {
     name: "ImportForm",
-    components: {FormField},
+    components: {FormObj, FormArr, FormField},
     props: {},
     data: () => {
       return {
@@ -58,9 +66,11 @@
       }
     },
     methods: {
+      isNumOrStr: val => isNumOrStr(val),
+      isArr: val => isArr(val),
+      isObj: val => isObj(val),
       parseImport: function(){
         try{
-          // TODO Make sure this is always an object or array?
           this.editableObj = YAML.parse(this.importStr)
         }catch(error){
           this.editableObj = "Whoops. You don't seem to have entered valid YAML"
@@ -80,6 +90,9 @@
   upload_field: 1
   estimated_read_time: 30
   estimated_task_time: 300
+  test_array:
+    - 24
+    - "drinks"
   learning_goals: |
     Conduct a competitive analysis to inform student project design
   tasks: |
