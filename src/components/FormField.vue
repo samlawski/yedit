@@ -22,7 +22,7 @@ export default {
   props: ['value'],
   computed: {
     showTextarea: function(){
-      return isStr(this.value) && (this.value.length > 24 || this.value.includes('/n'))
+      return isStr(this.value) && (this.value.length > 24 || this.value.includes('\n'))
     }
   }
 }
