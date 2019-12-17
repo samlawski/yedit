@@ -1,7 +1,9 @@
 <template>
   <div class="home">
     <div class="import__label">
-      <h3>Import YML</h3>
+      <h3>YAML Editor</h3>
+      <!-- <input type="file" name="" value=""> -->
+      <button v-on:click="copyExport" type="button" name="button">Copy YML to clipboard</button>
     </div>
 
     <div class="import">
@@ -9,15 +11,16 @@
     </div>
 
     <div class="editor__label">
-      <h3>Edit YML</h3>
-    </div>
-
-    <div class="editor">
+      <h3>Editor Form</h3>
       <p>
         Paste or enter your <a href="http://www.yamllint.com/" target="_blank">clean YAML</a> to the right 👉.<br>
         Edit it below 👇. Export the resulting YAML at the bottom right.
       </p>
-      <div class="editor__form">
+    </div>
+
+    <div class="editor">
+
+      <div @input="handleFormEdits" class="editor__form">
 
         <div v-if="isNumOrStr(editableObj)">
           <FormField v-model="editableObj" />
@@ -30,14 +33,6 @@
         </div>
 
       </div>
-    </div>
-
-    <div class="expor__label">
-      <h3>Export YML</h3>
-    </div>
-
-    <div class="export">
-      <pre class="export__content" v-on:click="copyExport">{{exportStr}}</pre>
     </div>
   </div>
 </template>
@@ -77,7 +72,8 @@ export default {
       navigator.clipboard.writeText(this.exportStr).then(() => {
         alert("Export YML copied to clipboard. You can now just paste it anywhere.")
       })
-    }
+    },
+    handleFormEdits: function() { this.importStr = this.exportStr }
   }
 }
 
@@ -157,12 +153,10 @@ function demoContent() { return`
 
   display: grid;
   grid-template-columns: 2fr 1fr;
-  grid-template-rows: auto 4fr auto 8fr;
+  grid-template-rows: auto 1fr;
   grid-template-areas:
     'editor__label import__label'
-    'editor import'
-    'editor export__label'
-    'editor export';
+    'editor import';
 
   & > * { overflow: scroll; }
 
@@ -186,26 +180,6 @@ function demoContent() { return`
     outline: none;
 
     box-shadow: inset 0 0 5px #888;
-  }
-}
-.export__label { grid-area: export__label; }
-.export {
-  grid-area: export;
-
-  pre {
-    margin: 0;
-    font-family: inherit;
-    background-color: #ddd;
-
-    overflow: auto;
-    padding: 5px;
-
-    cursor: pointer;
-    transition: .4s all;
-
-    &:hover {
-      background-color: lightgreen;
-    }
   }
 }
 
