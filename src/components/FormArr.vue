@@ -1,6 +1,6 @@
 <template lang="html">
-  <div>
-    <div class="editor__arr" v-for="(val, i) in arr" v-bind:key="`editable-wrapper-arr-${i}`">
+  <ol class="editor__arr">
+    <li class="editor__arr__item" v-for="(val, i) in arr" v-bind:key="`editable-wrapper-arr-${i}`">
 
       <div v-if="isNumOrStr(val)">
         <FormField v-model="arr[i]" />
@@ -15,8 +15,8 @@
         <p>Whoops. Somehow this field couldn't be displayed 🤷‍</p>
       </div>
 
-    </div>
-  </div>
+    </li>
+  </ol>
 </template>
 
 <script>
@@ -38,7 +38,9 @@ export default {
 
 <style lang="scss">
 .editor__arr {
-  border: 1px solid lightblue;
-  padding: 5px;
+  margin-bottom: 10px;
+}
+.editor__arr__item {
+  margin-bottom: 20px;
 }
 </style>

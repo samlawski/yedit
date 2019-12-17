@@ -1,7 +1,7 @@
 <template lang="html">
-  <div>
-    <div class="editor__obj" v-for="(val, key, i) in obj" v-bind:key="`editable-wrapper-${key}-${i}`">
-      <label><strong>{{key}}</strong></label>
+  <div class="editor__obj">
+    <div class="editor__obj__item" v-for="(val, key, i) in obj" v-bind:key="`editable-wrapper-${key}-${i}`">
+      <label>{{key}}</label>
 
       <div v-if="isNumOrStr(val)">
         <FormField v-model="obj[key]" />
@@ -39,7 +39,21 @@ export default {
 
 <style lang="scss">
 .editor__obj {
-  border: 1px solid #ccc;
-  padding: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+
+  border-left: 3px solid #ccc;
+  // border-radius: 3px;
+}
+
+.editor__obj__item {
+  margin-bottom: 20px;
+
+  label {
+    font-size: .7rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+    display: block;
+  }
 }
 </style>

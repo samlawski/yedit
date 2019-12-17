@@ -60,9 +60,7 @@ export default {
     }
   },
   computed: {
-    exportStr: function(){
-      return YAML.stringify(this.editableObj)
-    }
+    exportStr: function(){ return YAML.stringify(this.editableObj) }
   },
   methods: {
     isNumOrStr: val => isNumOrStr(val),
@@ -83,6 +81,7 @@ export default {
   }
 }
 
+demoContent()
 function demoContent() { return`
   project_url_field: 0
   code_url_field: 0
@@ -208,5 +207,9 @@ function demoContent() { return`
       background-color: lightgreen;
     }
   }
+}
+
+.editor__form {
+  padding-right: 10px;
 }
 </style>

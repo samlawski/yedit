@@ -1,11 +1,13 @@
 <template lang="html">
-  <div>
+  <div class="editor__field">
     <textarea
+      placeholder="type your text ..."
       v-if="showTextarea"
       v-bind:value="value"
       v-on:input="$emit('input', $event.target.value)"
     ></textarea>
     <input
+      placeholder="type your text ..."
       v-else
       v-bind:value="value"
       v-on:input="$emit('input', (/^[+-]?\d+(\.\d+)?$/.test($event.target.value) ? parseFloat($event.target.value) : $event.target.value) )"
@@ -29,4 +31,18 @@ export default {
 </script>
 
 <style lang="scss">
+input, textarea {
+  border: none;
+  width: 100%;
+  // border-left: 1px solid #ccc;
+  border-bottom: 2px solid #ccc;
+  padding: 3px;
+  outline: none;
+
+  transition: .4s border-color;
+
+  &:focus {
+    border-color: LightSeaGreen;
+  }
+}
 </style>
