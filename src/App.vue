@@ -15,6 +15,10 @@
             box-sizing: border-box;
 }
 
+body {
+  background-color: #223d51;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -24,6 +28,8 @@
   max-width: 1044px;
   margin: auto;
   padding: 0 10px;
+
+  background-color: #f7fbff;
 }
 
 #nav {

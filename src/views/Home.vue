@@ -2,12 +2,14 @@
   <div class="home">
     <div class="import__label">
       <h3>YAML Editor</h3>
-      <!-- <input type="file" name="" value=""> -->
-      <button v-on:click="copyExport" type="button" name="button">Copy YML to clipboard</button>
+      <div class="import__options">
+        <!-- <input type="file" name="" value=""> -->
+        <button v-on:click="copyExport" type="button" name="button">Copy YML to clipboard</button>
+      </div>
     </div>
 
     <div class="import">
-      <textarea name="name" rows="8" @input="parseImport" v-model="importStr"></textarea>
+      <textarea name="name" @input="parseImport" v-model="importStr"></textarea>
     </div>
 
     <div class="editor__label">
@@ -170,6 +172,7 @@ function demoContent() { return`
 .import__label { grid-area: import__label; }
 .import {
   grid-area: import;
+  overflow: hidden;
 
   textarea {
     height: 100%;
@@ -178,12 +181,38 @@ function demoContent() { return`
     border: none;
     resize: none;
     outline: none;
+    margin: 0;
 
     box-shadow: inset 0 0 5px #888;
+    background-color: #223d51;//#51606b;
+    color: #eee;
+    font-family: Courier, serif;
+    font-size: .8rem;
+    padding: 5px;
   }
 }
 
+.import__options {
+  text-align: right;
+}
 .editor__form {
   padding-right: 10px;
+}
+
+button {
+  background-color: none;
+  border: 2px solid #5ca2b2;
+  border-radius: 3px;
+  color: #5ca2b2;
+  font-weight: 700;
+  padding: 5px 10px;
+
+  transition: .4s all;
+
+  &:hover, &:focus {
+    cursor: pointer;
+    border-color: #77ddd6;
+    color: #77ddd6;
+  }
 }
 </style>

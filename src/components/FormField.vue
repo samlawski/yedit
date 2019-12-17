@@ -2,6 +2,7 @@
   <div class="editor__field">
     <textarea
       placeholder="type your text ..."
+      rows="3"
       v-if="showTextarea"
       v-bind:value="value"
       v-on:input="$emit('input', $event.target.value)"
@@ -38,6 +39,7 @@ input, textarea {
   border-bottom: 2px solid #ccc;
   padding: 3px;
   outline: none;
+  background-color: transparent;
 
   transition: .4s border-color;
 
