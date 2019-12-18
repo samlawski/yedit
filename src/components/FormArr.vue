@@ -1,13 +1,24 @@
 <template lang="html">
   <div class="editor__arr">
     <div class="editor__arr__item" v-for="(val, i) in arr" :key="`editable-wrapper-arr-${i}`">
-      <FormFieldGroup class="field" v-model="arr[i]" />
-      <button type="button" name="button" @click="removeItem(i)">-</button>
+      <div class="field__line">
+        <div class="field__counter">{{i + 1}}.</div>
+        <FormFieldGroup class="field" v-model="arr[i]" />
+      </div>
+      <div class="field__icons">
+        <button class="field__remove" type="button" name="button" @click="removeItem(i)">🗑</button>
+      </div>
     </div>
 
-    <div class="editor__add-item">
-      <button type="button" name="button" @click="addItem">+</button>
+    <div class="editor__arr__item">
+      <div class="field__line">
+        <div class="field__counter field__counter--add">
+          <button type="button" name="button" @click="addItem">+</button>
+        </div>
+        <div class="field">...</div>
+      </div>
     </div>
+
   </div>
 </template>
 
@@ -31,30 +42,45 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+button {
+  padding: 0;
+  margin: 0;
+}
+
 .editor__arr {
   margin-bottom: 10px;
 }
 .editor__arr__item {
   margin-bottom: 20px;
+}
+
+.field__line {
+  display: flex;
+}
+.field {
+  flex-grow: 1;
 
   display: flex;
-
-  .field { flex-grow: 1 }
-  button { flex-grow: 0 }
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-end;
 }
-
-
-.editor__add-item {
-  text-align: center;
+.field__icons {
+  margin-top: 5px;
+  font-size: .6rem;
+  text-align: right;
 }
+.field__counter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-button {
-  // background-color: rgba(255,255,255,0.9);
-  border: 1px solid rgba(0,0,0,0.5);
-  border-radius: 3px;
+  padding: 0 5px;
+  margin-right: 10px;
+}
+.field__counter--add{
+  background-color: rgba(0,0,0,0.1);
 
-  &:hover {
-    box-shadow: 0 0 5px #ccc;
-  }
+  height: 2rem;
 }
 </style>
