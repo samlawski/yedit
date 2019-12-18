@@ -15,8 +15,8 @@
     <div class="editor__label">
       <h3>Editor Form</h3>
       <p>
-        Paste or enter your <a href="http://www.yamllint.com/" target="_blank">clean YAML</a> to the right 👉.<br>
-        Edit it below 👇. Export the resulting YAML at the bottom right.
+        Insert your YAML in the dark section on the right 👉.<br>
+        Edit it below 👇 and export the resulting YAML at the bottom right.
       </p>
     </div>
 
@@ -42,8 +42,8 @@ export default {
   },
   data: () => {
     return {
-      importStr: '',
-      editableObj: {}
+      importStr: 'hello: world',
+      editableObj: {hello: 'world'}
     }
   },
   computed: {
@@ -75,7 +75,10 @@ export default {
 /* *** LAYOUT *** */
 
 .home {
+  padding: 10px;
+  
   max-height: 100vh;
+  height: 100vh;
 
   display: grid;
   grid-template-columns: 2fr 1fr;

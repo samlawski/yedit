@@ -30,7 +30,6 @@ body {
 
   max-width: 1044px;
   margin: auto;
-  padding: 0 10px;
 
   background-color: #f7fbff;
 }

@@ -28,10 +28,10 @@
     <div v-else-if="isObj(value)">
 
       <FormObj v-bind:obj="value" />
-      
+
     </div>
     <div v-else>
-      <p>Whoops. Somehow this field couldn't be displayed 🤷‍</p>
+      <p>Whoops. Somehow this field couldn't be displayed 🤷‍ Maybe try <a href="http://www.yamllint.com/" target="_blank">YAMLlint</a> to check whether your YAML is correct.</p>
     </div>
   </div>
 </template>
