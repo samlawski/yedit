@@ -76,9 +76,12 @@ export default {
 
 .home {
   padding: 10px;
-  
+
   max-height: 100vh;
   height: 100vh;
+
+  max-width: 100%;
+  max-height: 100%;
 
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -87,15 +90,17 @@ export default {
     'editor__label import__label'
     'editor import';
 
-  & > * { overflow: scroll; }
-
   @media(max-width: 700px){
     display: block;
   }
 }
 
 .editor__label { grid-area: editor__label; }
-.editor { grid-area: editor; }
+.editor {
+  grid-area: editor;
+
+  overflow: scroll;
+}
 .import__label { grid-area: import__label; }
 .import {
   grid-area: import;

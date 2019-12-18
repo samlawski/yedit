@@ -46,10 +46,15 @@ export default {
 
 .editor__add-item {
   text-align: center;
+}
 
-  button {
-    border-radius: 50%;
-    background-color: rgba(0,0,0,0.1);
+button {
+  // background-color: rgba(255,255,255,0.9);
+  border: 1px solid rgba(0,0,0,0.5);
+  border-radius: 3px;
+
+  &:hover {
+    box-shadow: 0 0 5px #ccc;
   }
 }
 </style>
