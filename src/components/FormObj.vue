@@ -39,7 +39,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .editor__obj {
   padding: 10px;
   margin-bottom: 10px;

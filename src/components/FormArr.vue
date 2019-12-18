@@ -1,21 +1,23 @@
 <template lang="html">
   <ol class="editor__arr">
-    <li class="editor__arr__item" v-for="(val, i) in arr" v-bind:key="`editable-wrapper-arr-${i}`">
-
+    <li class="editor__arr__item" v-for="(val, i) in arr" :key="`editable-wrapper-arr-${i}`">
       <div v-if="isNumOrStr(val)">
         <FormField v-model="arr[i]" />
       </div>
       <div v-else-if="isArr(val)">
-        <FormArr v-bind:arr="val" />
+        <FormArr :arr="val" />
       </div>
       <div v-else-if="isObj(val)">
-        <FormObj v-bind:obj="val" />
+        <FormObj :obj="val" />
       </div>
       <div v-else>
         <p>Whoops. Somehow this field couldn't be displayed 🤷‍</p>
       </div>
-
     </li>
+
+    <div class="editor__add-item">
+      <button type="button" name="button" @click="addItem">+</button>
+    </div>
   </ol>
 </template>
 
@@ -33,16 +35,27 @@ export default {
   methods: {
     isNumOrStr: val => isNumOrStr(val),
     isArr: val => isArr(val),
-    isObj: val => isObj(val)
+    isObj: val => isObj(val),
+    addItem: function(){ this.arr.push("") }
   }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .editor__arr {
   margin-bottom: 10px;
 }
 .editor__arr__item {
   margin-bottom: 20px;
+}
+
+
+.editor__add-item {
+  text-align: center;
+}
+button {
+  border-radius: 50%;
+  background-color: rgba(0,0,0,0.1);
+
 }
 </style>

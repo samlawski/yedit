@@ -149,7 +149,10 @@ function demoContent() { return`
 `}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+
+/* *** LAYOUT *** */
+
 .home {
   max-height: 100vh;
 
@@ -198,6 +201,8 @@ function demoContent() { return`
 .editor__form {
   padding-right: 10px;
 }
+
+/* *** STYLES *** */
 
 button {
   background-color: none;
