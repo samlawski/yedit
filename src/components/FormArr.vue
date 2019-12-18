@@ -1,7 +1,8 @@
 <template lang="html">
   <div class="editor__arr">
     <div class="editor__arr__item" v-for="(val, i) in arr" :key="`editable-wrapper-arr-${i}`">
-      <FormFieldGroup v-model="arr[i]" />
+      <FormFieldGroup class="field" v-model="arr[i]" />
+      <button type="button" name="button" @click="removeItem(i)">-</button>
     </div>
 
     <div class="editor__add-item">
@@ -23,7 +24,8 @@ export default {
     isNumOrStr: val => isNumOrStr(val),
     isArr: val => isArr(val),
     isObj: val => isObj(val),
-    addItem: function(){ this.arr.push("") }
+    addItem: function(){ this.arr.push("") },
+    removeItem: function(i){ this.arr.splice(i, 1) }
   }
 }
 </script>
@@ -34,6 +36,11 @@ export default {
 }
 .editor__arr__item {
   margin-bottom: 20px;
+
+  display: flex;
+
+  .field { flex-grow: 1 }
+  button { flex-grow: 0 }
 }
 
 

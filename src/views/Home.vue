@@ -22,7 +22,7 @@
 
     <div class="editor">
 
-      <div @input="handleFormEdits" class="editor__form">
+      <div @input="handleFormEdits" @click="handleFormEdits" class="editor__form">
         <FormFieldGroup v-model="editableObj" />
       </div>
 
