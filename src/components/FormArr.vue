@@ -22,11 +22,13 @@
 <script>
 import {isNumOrStr, isObj, isArr} from '@/services/Utility.js'
 import FormField from '@/components/FormField.vue'
-import FormObj from '@/components/FormObj.vue'
 
 export default {
   name: 'FormArr',
-  components: {FormField, FormObj},
+  components: {
+    FormField,
+    FormObj: () => import('@/components/FormObj.vue')
+  },
   props: ['arr'],
   methods: {
     isNumOrStr: val => isNumOrStr(val),
