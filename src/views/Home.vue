@@ -23,18 +23,9 @@
     <div class="editor">
 
       <div @input="handleFormEdits" class="editor__form">
-
-        <div v-if="isNumOrStr(editableObj)">
-          <FormField v-model="editableObj" />
-        </div>
-        <div v-else-if="isArr(editableObj)">
-          <FormArr v-bind:arr="editableObj" />
-        </div>
-        <div v-else-if="isObj(editableObj)">
-          <FormObj v-bind:obj="editableObj" />
-        </div>
-
+        <FormFieldGroup v-model="editableObj" />
       </div>
+
     </div>
   </div>
 </template>
@@ -43,13 +34,12 @@
 // @ is an alias to /src
 import YAML from 'yaml'
 import {isNumOrStr, isObj, isArr} from '@/services/Utility.js'
-import FormField from '@/components/FormField.vue'
-import FormObj from '@/components/FormObj.vue'
-import FormArr from '@/components/FormArr.vue'
 
 export default {
   name: 'home',
-  components: {FormObj, FormArr, FormField},
+  components: {
+    FormFieldGroup: () => import('@/components/FormFieldGroup.vue')
+  },
   data: () => {
     return {
       importStr: demoContent(), // DEMO CONTENT - TODO: Remove!
