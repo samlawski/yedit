@@ -65,7 +65,10 @@ export default {
         alert("Export YML copied to clipboard. You can now just paste it anywhere.")
       })
     },
-    handleFormEdits: function() { this.importStr = this.exportStr }
+    handleFormEdits: function() {
+      this.importStr = this.exportStr
+      // this.parseImport() // important when obj keys are edited
+    }
   }
 }
 </script>

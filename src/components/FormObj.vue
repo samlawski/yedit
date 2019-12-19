@@ -2,8 +2,14 @@
   <div class="editor__obj">
     <div class="editor__obj__item" v-for="(val, key, i) in obj" v-bind:key="`editable-wrapper-${key}-${i}`">
 
-      <label>{{key}}</label>
+      <label>
+        <span class="key">{{key}}</span>
+        <span class="editKey" @click="editKey(key)">✏️</span>
+      </label>
       <FormFieldGroup v-model="obj[key]" />
+      <!-- <div class="field__icons">
+        <button class="field__remove" type="button" name="button" @click="removeItem(i)">🗑</button>
+      </div> -->
 
     </div>
   </div>
@@ -21,7 +27,10 @@ export default {
   methods: {
     isNumOrStr: val => isNumOrStr(val),
     isArr: val => isArr(val),
-    isObj: val => isObj(val)
+    isObj: val => isObj(val),
+    editKey: function(currentKey){
+      console.log('edit', currentKey)
+    }
   }
 }
 </script>
@@ -42,6 +51,16 @@ export default {
     font-weight: 700;
     margin-bottom: 5px;
     display: block;
+
+    .editKey {
+      opacity: 0.2;
+      transition: .4s opacity;
+      cursor: pointer;
+    }
+
+    &:hover {
+      .editKey {opacity: 1}
+    }
   }
 }
 </style>
