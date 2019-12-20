@@ -15,9 +15,9 @@
         :path="newPath(key)"
         :value="obj[key]"
       />
-      <!-- <div class="field__icons">
-        <button class="field__remove" type="button" name="button" @click="removeItem(i)">🗑</button>
-      </div> -->
+      <div class="field__icons">
+        <button class="field__remove" type="button" name="button" @click="removeItem(key)">🗑</button>
+      </div>
 
     </div>
   </div>
@@ -37,7 +37,7 @@ export default {
     isArr: val => isArr(val),
     isObj: val => isObj(val),
     newPath(key){ return [].concat(this.path, key.toString()) },
-    editKey: function(oldKey, target, i){
+    editKey(oldKey, target, i){
       let newKey = target.value
       let isKeyPresent = Object.keys(this.obj).includes(newKey)
 
@@ -54,6 +54,12 @@ export default {
           this.$refs[this.path.toString() + '_keyInput_' + i][0].focus()
         })
       }
+    },
+    removeItem(key){
+      this.$store.commit('removeObjKey', {
+        path: this.path,
+        key: key
+      })
     }
   }
 }
@@ -84,5 +90,17 @@ export default {
   border: none;
   display: inline;
   width: 100%;
+}
+
+.field__icons {
+  margin-top: 5px;
+  font-size: .6rem;
+  text-align: left;
+  opacity: 0.2;
+  transition: .4s opacity;
+
+  &:hover {
+    opacity: 1;
+  }
 }
 </style>

@@ -69,17 +69,6 @@ button {
 }
 .editor__arr__item {
   margin-bottom: 20px;
-
-  .field__icons button {
-    opacity: 0.2;
-    transition: .4s opacity;
-  }
-
-  &:hover {
-    .field__icons button {
-      opacity: 1;
-    }
-  }
 }
 
 .field__line {
@@ -96,7 +85,14 @@ button {
 .field__icons {
   margin-top: 5px;
   font-size: .6rem;
-  text-align: right;
+  text-align: left;
+
+  opacity: 0.2;
+  transition: .4s opacity;
+
+  &:hover {
+    opacity: 1;
+  }
 }
 .field__counter {
   display: flex;

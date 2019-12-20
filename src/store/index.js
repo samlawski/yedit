@@ -47,6 +47,14 @@ export default new Vuex.Store({
       }
 
       state.editableStr = YAML.stringify(state.editableObj)
+    },
+    removeObjKey(state, payload){
+      state.editableObj = _.omit(
+        state.editableObj,
+        [[].concat(payload.path, payload.key)]
+      )
+      
+      state.editableStr = YAML.stringify(state.editableObj)
     }
   }
 })
