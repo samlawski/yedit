@@ -3,7 +3,11 @@
     <div class="editor__arr__item" v-for="(val, i) in arr" :key="`editable-wrapper-arr-${i}`">
       <div class="field__line">
         <div class="field__counter">{{i + 1}}.</div>
-        <FormFieldGroup class="field" v-model="arr[i]" />
+        <FormFieldGroup
+          class="field"
+          :path="newPath(i)"
+          :value="arr[i]"
+        />
       </div>
       <div class="field__icons">
         <button class="field__remove" type="button" name="button" @click="removeItem(i)">🗑</button>
@@ -30,13 +34,26 @@ export default {
   components: {
     FormFieldGroup: () => import('@/components/FormFieldGroup.vue')
   },
-  props: ['arr'],
+  props: ['arr', 'path'],
   methods: {
     isNumOrStr: val => isNumOrStr(val),
     isArr: val => isArr(val),
     isObj: val => isObj(val),
-    addItem: function(){ this.arr.push("") },
-    removeItem: function(i){ this.arr.splice(i, 1) }
+    newPath(index){ return this.path + '/' + index.toString() },
+    addItem: function(){
+      this.arr.push("")
+      this.$store.commit('updateVal', {
+        value: this.arr,
+        path: this.path
+      })
+    },
+    removeItem: function(i){
+      this.arr.splice(i, 1)
+      this.$store.commit('updateVal', {
+        value: this.arr,
+        path: this.path
+      })
+    }
   }
 }
 </script>

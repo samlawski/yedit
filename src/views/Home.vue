@@ -9,7 +9,7 @@
     </div>
 
     <div class="import">
-      <textarea name="name" @input="parseImport" v-model="importStr"></textarea>
+      <textarea name="name" v-model="editableStr"></textarea>
     </div>
 
     <div class="editor__label">
@@ -21,9 +21,11 @@
     </div>
 
     <div class="editor">
-
-      <div @input="handleFormEdits" @click="handleFormEdits" class="editor__form">
-        <FormFieldGroup v-model="editableObj" />
+      <div class="editor__form">
+        <FormFieldGroup
+          path=""
+          :value="editableObj"
+        />
       </div>
 
     </div>
@@ -31,43 +33,32 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import YAML from 'yaml'
-import {isNumOrStr, isObj, isArr} from '@/services/Utility.js'
-
 export default {
   name: 'home',
   components: {
     FormFieldGroup: () => import('@/components/FormFieldGroup.vue')
   },
   data: () => {
-    return {
-      importStr: 'hello: world',
-      editableObj: {hello: 'world'}
-    }
+    return {}
   },
   computed: {
-    exportStr: function(){ return YAML.stringify(this.editableObj) }
-  },
-  methods: {
-    isNumOrStr: val => isNumOrStr(val),
-    isArr: val => isArr(val),
-    isObj: val => isObj(val),
-    parseImport: function(){
-      try{
-        this.editableObj = YAML.parse(this.importStr)
-      }catch(error){
-        this.editableObj = "Whoops. You don't seem to have entered valid YAML"
+    editableStr: {
+      get(){
+        return this.$store.state.editableStr
+      },
+      set(value){
+        this.$store.commit('updateStr', value)
       }
     },
+    editableObj(){ return this.$store.state.editableObj }
+  },
+  methods: {
     copyExport: function(){
-      navigator.clipboard.writeText(this.exportStr).then(() => {
+      navigator.clipboard.writeText(
+        this.$store.state.editableStr
+      ).then(() => {
         alert("Export YML copied to clipboard. You can now just paste it anywhere.")
       })
-    },
-    handleFormEdits: function() {
-      this.importStr = this.exportStr
-      // this.parseImport() // important when obj keys are edited
     }
   }
 }

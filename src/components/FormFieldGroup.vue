@@ -1,38 +1,44 @@
 <template lang="html">
   <div class="">
-    <div v-if="isNumOrStr(value)">
 
-      <div class="editor__field">
-        <textarea
-          placeholder="type your text ..."
-          rows="3"
-          v-if="showTextarea"
-          v-bind:value="value"
-          v-on:input="$emit('input', $event.target.value)"
-        ></textarea>
-        <input
-          placeholder="type your text ..."
-          v-else
-          v-bind:value="value"
-          v-on:input="$emit('input', (/^[+-]?\d+(\.\d+)?$/.test($event.target.value) ? parseFloat($event.target.value) : $event.target.value) )"
-          type="text"
-        >
-      </div>
+    <div class="editor__field" v-if="isNumOrStr(value)">
+
+      <textarea
+        v-if="showTextarea"
+        placeholder="type your text ..."
+        rows="3"
+        :value="value"
+        @input="updateValue($event.target.value)"
+      ></textarea>
+      <input
+        v-else
+        placeholder="type your text ..."
+        type="text"
+        :value="value"
+        @input="updateValue($event.target.value)"
+      >
 
     </div>
     <div v-else-if="isArr(value)">
 
-      <FormArr v-bind:arr="value" />
+      <FormArr
+        :path="path"
+        :arr="value"
+      />
 
     </div>
     <div v-else-if="isObj(value)">
 
-      <FormObj v-bind:obj="value" />
+      <FormObj
+        :path="path"
+        :obj="value"
+      />
 
     </div>
     <div v-else>
       <p>Whoops. Somehow this field couldn't be displayed 🤷‍ Maybe try <a href="http://www.yamllint.com/" target="_blank">YAMLlint</a> to check whether your YAML is correct.</p>
     </div>
+
   </div>
 </template>
 
@@ -45,7 +51,7 @@ export default {
     FormObj: () => import('@/components/FormObj.vue'),
     FormArr: () => import('@/components/FormArr.vue')
   },
-  props: ['value'],
+  props: ['value', 'path'],
   computed: {
     showTextarea: function(){
       return isStr(this.value) && (this.value.length > 24 || this.value.includes('\n'))
@@ -54,12 +60,18 @@ export default {
   methods: {
     isNumOrStr: val => isNumOrStr(val),
     isArr: val => isArr(val),
-    isObj: val => isObj(val)
+    isObj: val => isObj(val),
+    updateValue: function(v){
+      this.$store.commit('updateVal', {
+        value: v,
+        path: this.path
+      })
+    }
   }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 input, textarea {
   border: none;
   width: 100%;
