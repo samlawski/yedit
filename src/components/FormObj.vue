@@ -7,7 +7,7 @@
           class="editKey__field"
           type="text"
           :value="key"
-          @input="editKey(key, $event.target.value)"
+          @blur="editKey(key, $event.target.value)"
         >
         <span class="editKey__icon">✏️</span>
       </label>
@@ -36,7 +36,7 @@ export default {
     isNumOrStr: val => isNumOrStr(val),
     isArr: val => isArr(val),
     isObj: val => isObj(val),
-    newPath(key){ return this.path + '/' + key.toString() },
+    newPath(key){ return [].concat(this.path, key.toString()) },
     editKey: function(oldKey, newKey){
       this.$store.commit('updateObjKey', {
         path: this.path,

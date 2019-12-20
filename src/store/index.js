@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import YAML from 'yaml'
+import _ from 'lodash'
 
 Vue.use(Vuex)
 
@@ -20,25 +21,46 @@ export default new Vuex.Store({
       }
     },
     updateVal(state, payload){
-      let pathKeys = payload.path.split('/')
-
-      pathKeys.reduce((acc, val, i) => {
-        if(i == 0) return acc
-        if(i + 1 != pathKeys.length) return acc[val]
-        // TODO what if there is only a value?
-
-        val.toString().length > 0 ?
-          acc[val] = payload.value :
-          acc = payload.value
-      }, state.editableObj)
+      payload.path.length > 0 ?
+        _.set(state.editableObj, payload.path, payload.value) :
+        state.editableObj = payload.value
 
       state.editableStr = YAML.stringify(state.editableObj)
     },
     updateObjKey(state, payload){
-      console.log('n', payload.path, payload.oldKey, payload.newKey)
+      if(payload.path.length > 0){
+        _.set(
+          state.editableObj,
+          payload.path,
+          replaceObjKey(
+            _.get(state.editableObj, payload.path),
+            payload.oldKey,
+            payload.newKey
+          )
+        )
+      }else{
+        state.editableObj = replaceObjKey(
+          state.editableObj,
+          payload.oldKey,
+          payload.newKey
+        )
+      }
 
-      state
-      payload
+      state.editableStr = YAML.stringify(state.editableObj)
     }
   }
 })
+
+
+function replaceObjKey(oldObj, oldKey, newKey){
+  let tmpObj = {}
+  Object.keys(oldObj).forEach(key => {
+    if (key === oldKey) {
+      let newPair = { [newKey]: oldObj[oldKey] }
+      tmpObj = { ...tmpObj, ...newPair }
+    } else {
+      tmpObj = { ...tmpObj, [key]: oldObj[key] }
+    }
+  })
+  return tmpObj
+}

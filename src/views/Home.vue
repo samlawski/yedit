@@ -23,7 +23,7 @@
     <div class="editor">
       <div class="editor__form">
         <FormFieldGroup
-          path=""
+          :path=[]
           :value="editableObj"
         />
       </div>

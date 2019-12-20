@@ -39,7 +39,7 @@ export default {
     isNumOrStr: val => isNumOrStr(val),
     isArr: val => isArr(val),
     isObj: val => isObj(val),
-    newPath(index){ return this.path + '/' + index.toString() },
+    newPath(index){ return [].concat(this.path, index.toString()) },
     addItem: function(){
       this.arr.push("")
       this.$store.commit('updateVal', {
