@@ -7,9 +7,8 @@
           class="editKey__field"
           type="text"
           :value="key"
-          @blur="editKey(key, $event.target.value)"
+          @blur="editKey(key, $event.target)"
         >
-        <span class="editKey__icon">✏️</span>
       </label>
       <FormFieldGroup
         :path="newPath(key)"
@@ -37,12 +36,23 @@ export default {
     isArr: val => isArr(val),
     isObj: val => isObj(val),
     newPath(key){ return [].concat(this.path, key.toString()) },
-    editKey: function(oldKey, newKey){
-      this.$store.commit('updateObjKey', {
-        path: this.path,
-        oldKey: oldKey,
-        newKey: newKey
-      })
+    editKey: function(oldKey, target){
+      let newKey = target.value
+      let isKeyPresent = Object.keys(this.obj).includes(newKey)
+
+      let allowEdit = isKeyPresent ?
+        confirm("Attention! You chose a name for this field that already exists. You cannot have two fields with the same name. If you confirm, the other field will be removed. Are you sure you want to do that?") :
+        true
+
+      if(allowEdit){
+        this.$store.commit('updateObjKey', {
+          path: this.path,
+          oldKey: oldKey,
+          newKey: newKey
+        })
+      }else{
+        target.value = oldKey
+      }
     }
   }
 }
@@ -60,24 +70,13 @@ export default {
   margin-bottom: 20px;
 
   label {
-    font-size: .7rem;
-    font-weight: 700;
-    margin-bottom: 5px;
     display: flex;
-
-    .editKey__icon {
-      opacity: 0.2;
-      transition: .4s opacity;
-      cursor: pointer;
-    }
-
-    &:hover {
-      .editKey__icon {opacity: 1}
-    }
   }
 }
 
 .editKey__field {
+  font-size: .7rem;
+  margin-bottom: 5px;
   outline: none;
   background-color: transparent;
   font-weight: 700;
