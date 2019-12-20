@@ -62,8 +62,10 @@ export default {
     isArr: val => isArr(val),
     isObj: val => isObj(val),
     updateValue: function(v){
+      let stringOrFloat = (/^[+-]?\d+(\.\d+)?$/.test(v) ? parseFloat(v) : v)
+
       this.$store.commit('updateVal', {
-        value: v,
+        value: stringOrFloat,
         path: this.path
       })
     }
