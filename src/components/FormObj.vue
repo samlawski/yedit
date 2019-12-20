@@ -6,8 +6,9 @@
         <input
           class="editKey__field"
           type="text"
+          :ref="path.toString() + '_keyInput_' + i"
           :value="key"
-          @blur="editKey(key, $event.target)"
+          @input="editKey(key, $event.target, i)"
         >
       </label>
       <FormFieldGroup
@@ -36,22 +37,22 @@ export default {
     isArr: val => isArr(val),
     isObj: val => isObj(val),
     newPath(key){ return [].concat(this.path, key.toString()) },
-    editKey: function(oldKey, target){
+    editKey: function(oldKey, target, i){
       let newKey = target.value
       let isKeyPresent = Object.keys(this.obj).includes(newKey)
 
-      let allowEdit = isKeyPresent ?
-        confirm("Attention! You chose a name for this field that already exists. You cannot have two fields with the same name. If you confirm, the other field will be removed. Are you sure you want to do that?") :
-        true
-
-      if(allowEdit){
+      if(isKeyPresent){
+        alert("Attention! You tried to enter a field name that already exists. All fields on the same level need to have different names.")
+        target.value = oldKey
+      }else{
         this.$store.commit('updateObjKey', {
           path: this.path,
           oldKey: oldKey,
           newKey: newKey
         })
-      }else{
-        target.value = oldKey
+        this.$nextTick(() => {
+          this.$refs[this.path.toString() + '_keyInput_' + i][0].focus()
+        })
       }
     }
   }
