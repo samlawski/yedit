@@ -20,6 +20,13 @@
       </div>
 
     </div>
+
+    <!-- <div class="editor__obj__item editor__obj__item--add">
+      <label>
+        <button class="" type="button" name="button" @click="addItem">add field ...</button>
+      </label>
+    </div> -->
+
   </div>
 </template>
 
@@ -60,6 +67,9 @@ export default {
         path: this.path,
         key: key
       })
+    },
+    addItem(){
+      this.$store.commit('addObjItem', { path: this.path })
     }
   }
 }
@@ -101,6 +111,15 @@ export default {
 
   &:hover {
     opacity: 1;
+  }
+}
+
+.editor__obj__item--add {
+  button {
+    font-size: .7rem;
+    font-weight: 700;
+    background-color: rgba(0,0,0,0.1);
+    padding: 5px;
   }
 }
 </style>

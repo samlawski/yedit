@@ -53,7 +53,21 @@ export default new Vuex.Store({
         state.editableObj,
         [[].concat(payload.path, payload.key)]
       )
-      
+
+      state.editableStr = YAML.stringify(state.editableObj)
+    },
+    addObjItem(state, payload){
+
+      if(payload.path.length > 0){
+        _.set(
+          state.editableObj,
+          [].concat(payload.path, [""]),
+          ""
+        )
+      }else{
+        state.editableObj[""] = ""
+      }
+
       state.editableStr = YAML.stringify(state.editableObj)
     }
   }
