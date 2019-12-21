@@ -13,6 +13,7 @@
       </label>
       <FormFieldGroup
         :path="newPath(key)"
+        :ref="path.toString() + '_valInput_' + i"
         :value="obj[key]"
       />
       <div class="field__icons">
@@ -21,17 +22,24 @@
 
     </div>
 
-    <!-- <div class="editor__obj__item editor__obj__item--add">
-      <label>
-        <button class="" type="button" name="button" @click="addItem">add field ...</button>
-      </label>
-    </div> -->
+    <div class="editor__obj__item editor__obj__item--add">
+      <input 
+        type="text" 
+        value="add label ..." 
+        @click="startAddingKey" 
+        @blur="resetAddKeyBtn" 
+        @keyup.enter="addKey($event.target)" 
+        ref="addKey"
+      >
+      <small v-if="addingKey">(Hit <i>Enter</i> to add)</small>
+    </div>
 
   </div>
 </template>
 
 <script>
 import {isNumOrStr, isObj, isArr} from '@/services/Utility.js'
+// import FormNewValue from '@/components/FormNewValue.vue'
 
 export default {
   name: 'FormObj',
@@ -39,6 +47,11 @@ export default {
     FormFieldGroup: () => import('@/components/FormFieldGroup.vue')
   },
   props: ['obj', 'path'],
+  data(){
+    return {
+      addingKey: false
+    }
+  },
   methods: {
     isNumOrStr: val => isNumOrStr(val),
     isArr: val => isArr(val),
@@ -68,8 +81,18 @@ export default {
         key: key
       })
     },
-    addItem(){
-      this.$store.commit('addObjItem', { path: this.path })
+    startAddingKey(){
+      this.addingKey = true
+      this.$refs.addKey.value = ""
+    },
+    resetAddKeyBtn(){
+      this.addingKey = false
+      this.$refs.addKey.value = "add label ..."
+    },
+    addKey(target){
+      let key = target.value
+      this.$store.commit('addObjKey', { path: this.path, key: key})
+      target.blur()
     }
   }
 }
@@ -114,11 +137,18 @@ export default {
 }
 
 .editor__obj__item--add {
-  button {
-    font-size: .7rem;
-    font-weight: 700;
+  display: flex;
+  align-items: center; 
+  
+  input {
     background-color: rgba(0,0,0,0.1);
-    padding: 5px;
+    padding: 5px 10px;
+    font-size: .7rem;
+    margin-right: 10px;
+
+    border: none;
+    outline: none;
+    cursor: pointer;
   }
 }
 </style>
