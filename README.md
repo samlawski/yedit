@@ -30,7 +30,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### ToDo
 
-- Add add-label button to objects
 - Redesign removal icon for values (in arrays) or key-values (in objects)
 - Add toggable input field type for values: 
   - input

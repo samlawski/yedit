@@ -36,7 +36,7 @@
 
     </div>
     <div v-else>
-      <p>Whoops. Somehow this field couldn't be displayed 🤷‍ Maybe try <a href="http://www.yamllint.com/" target="_blank">YAMLlint</a> to check whether your YAML is correct.</p>
+      <FormNewValue :path="path" />
     </div>
 
   </div>
@@ -44,10 +44,12 @@
 
 <script>
 import {isNumOrStr, isObj, isArr, isStr} from '@/services/Utility.js'
+import FormNewValue from '@/components/FormNewValue.vue'
 
 export default {
   name: 'FormFieldGroup',
   components: {
+    FormNewValue,
     FormObj: () => import('@/components/FormObj.vue'),
     FormArr: () => import('@/components/FormArr.vue')
   },

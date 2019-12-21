@@ -39,7 +39,6 @@
 
 <script>
 import {isNumOrStr, isObj, isArr} from '@/services/Utility.js'
-// import FormNewValue from '@/components/FormNewValue.vue'
 
 export default {
   name: 'FormObj',

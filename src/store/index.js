@@ -64,7 +64,7 @@ export default new Vuex.Store({
           null
         )
       }else{
-        state.editableObj[payload.key] = ""
+        state.editableObj[payload.key] = null
       }
 
       state.editableStr = YAML.stringify(state.editableObj)
