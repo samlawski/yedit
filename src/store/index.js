@@ -7,8 +7,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    editableStr: "test: 423\ntest2:\n  hi: there\n  world: \n    - 24\n    - drinks",
-    editableObj: {test: 423, test2: {hi: "there", world: [24, "drinks"]}}
+    editableStr: '',
+    editableObj: null
   },
   mutations: {
     updateStr(state, payload){

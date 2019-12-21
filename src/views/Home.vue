@@ -23,19 +23,28 @@
     <div class="editor">
       <div class="editor__form">
         <FormFieldGroup
+          v-if="editableObj != null"
           :path=[]
           :value="editableObj"
         />
+        <FormNewValue 
+          v-else 
+          :path=[]
+        />
       </div>
-
     </div>
+
+    <footer>Current version from: Dec 21st, 2019</footer>
   </div>
 </template>
 
 <script>
+import FormNewValue from '@/components/FormNewValue.vue'
+
 export default {
   name: 'home',
   components: {
+    FormNewValue,
     FormFieldGroup: () => import('@/components/FormFieldGroup.vue')
   },
   data: () => {
@@ -79,10 +88,11 @@ export default {
 
   display: grid;
   grid-template-columns: 2fr 1fr;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto 1fr auto;
   grid-template-areas:
     'editor__label import__label'
-    'editor import';
+    'editor import'
+    'footer footer';
 
   @media(max-width: 700px){
     display: block;
@@ -123,6 +133,10 @@ export default {
 }
 .editor__form {
   padding-right: 10px;
+}
+
+footer {
+  font-size: .6rem;
 }
 
 /* *** STYLES *** */

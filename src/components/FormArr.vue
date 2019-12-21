@@ -1,5 +1,6 @@
 <template lang="html">
   <div class="editor__arr">
+    
     <div class="editor__arr__item" v-for="(val, i) in arr" :key="`editable-wrapper-arr-${i}`">
       <div class="field__line">
         <div class="field__counter">{{i + 1}}.</div>

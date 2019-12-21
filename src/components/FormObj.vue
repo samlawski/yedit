@@ -98,7 +98,6 @@ export default {
   background-color: transparent;
   font-weight: 700;
   border: none;
-  display: inline;
   width: 100%;
 }
 
