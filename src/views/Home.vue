@@ -9,14 +9,14 @@
     </div>
 
     <div class="import">
-      <textarea name="name" v-model="editableStr"></textarea>
+      <textarea name="name" placeholder="Enter YAML here ..." v-model="editableStr"></textarea>
     </div>
 
     <div class="editor__label">
       <h3>Editor Form</h3>
       <p>
-        Insert your YAML in the dark section on the right 👉.<br>
-        Edit it below 👇 and export the resulting YAML at the bottom right.
+        Paste YAML in the right column. Edits can be done below and in the YAML editor itself.<br>
+        Click the button on the right 👉 to export your YAML code and paste it anywhere.
       </p>
     </div>
 
@@ -136,6 +136,7 @@ export default {
 }
 
 footer {
+  padding-top: 5px;
   font-size: .6rem;
 }
 
