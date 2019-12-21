@@ -16,9 +16,7 @@ The editor is usable in its current state. It follows a list of next features to
 
 1. [Error Handling] Show error when user creates label that already exists within object.
 2. [Design] Redesign removal icon for values (in arrays) or key-values (in objects)
-3. [Feature] Add different types of input fields (let user toggle between them)
-  - input
-  - textarea
+3. [Feature] Add different types of input fields (let user toggle between them): `input`, `textarea`
 4. autostrip `---` if it's the first or last part of the imported string
 5. Import files (with validation)
 6. Export files in addition to copying to clipboard
