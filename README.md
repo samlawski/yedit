@@ -16,7 +16,6 @@ The editor is usable in its current state. It follows a list of next features to
 
 ## Up Next
 
-0. Fix mobile layouts
 1. [Error Handling] Show error when user creates label that already exists within object.
 2. [Design] Redesign removal icon for values (in arrays) or key-values (in objects)
 3. [Feature] Add different types of input fields (let user toggle between them): `input`, `textarea`
@@ -27,6 +26,7 @@ The editor is usable in its current state. It follows a list of next features to
 8. Import/export JSON
 9. Import/export CSV (disables nested elements)
 10. WYSIWYG to Markdown/HTML editor for `textarea`s
+11. Fix mobile layouts
 
 ## (Maybe) Later
 

@@ -56,7 +56,7 @@ export default {
   props: ['value', 'path'],
   computed: {
     showTextarea: function(){
-      return isStr(this.value) && (this.value.length > 24 || this.value.includes('\n'))
+      return isStr(this.value) && (this.value.length > 64 || this.value.includes('\n'))
     }
   },
   methods: {
